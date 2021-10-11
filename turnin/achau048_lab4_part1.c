@@ -23,11 +23,8 @@ void TickFct(){
             break;
 
         case initialLights:
-            if((tmpA & 0x01) == 0x00){
-                State = buttonWait1;
-            }else{
-                State = initialLights;
-            }
+            State = buttonWait1;
+            break;
 
         case buttonWait1:
             if((tmpA & 0x01) == 0x01){
@@ -38,11 +35,7 @@ void TickFct(){
             break;
 
         case switchedLights:
-            if((tmpA & 0x01) == 0x00){
-                State = buttonWait2;
-            }else{
-                State = switchedLights;
-            }
+            State = buttonWait2;
             break;
 
         case buttonWait2:
@@ -60,21 +53,25 @@ void TickFct(){
 
         switch(State){
             case initialLights:
-                tmpB = (tmpB | 0x01);
+                tmpB = (tmpB & 0xFD);//BBBB BB0B
+                tmpB = (tmpB | 0x01);//BBBB BB01
                 break;
 
             case buttonWait1:
                 break;
 
             case switchedLights:
-                tmpB = (tmpB | 0x02);
+                tmpB = (tmpB & 0xFE);//BBBB BBB0
+                tmpB = (tmpB | 0x02);//BBBB BB10
                 break;
 
             case buttonWait2:
                 break;
 
             default:
+                tmpB = (tmpB & 0xFD);
                 tmpB = (tmpB | 0x01);
+                break;
         }
 }
 
