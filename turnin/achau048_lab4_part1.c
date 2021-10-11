@@ -86,7 +86,9 @@ int main(void) {
     /* Insert your solution below */
     State = Start;
     while (1) {
+        tmpA = PINA;
         TickFct();
+        PORTB = tmpB;
     }
     return 1;
 }
